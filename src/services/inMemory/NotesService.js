@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const { nanoid } = require('nanoid');
 
 class NotesService {
@@ -19,12 +18,13 @@ class NotesService {
       createdAt,
       updatedAt,
     };
+
     this._notes.push(newNote);
 
     const isSuccess = this._notes.filter((note) => note.id === id).length > 0;
 
     if (!isSuccess) {
-      throw new Error('Catatan gagal ditambahkan');
+      throw new Error('Catatan gagal ditemukan');
     }
 
     return id;
@@ -36,14 +36,16 @@ class NotesService {
 
   getNoteById(id) {
     const note = this._notes.filter((n) => n.id === id)[0];
+
     if (!note) {
       throw new Error('Catatan tidak ditemukan');
     }
+
     return note;
   }
 
   editNoteById(id, { title, body, tags }) {
-    const index = this._notes.findIndex((note) => note.id === id);
+    const index = this._notes.findIndex((n) => n.id === id);
 
     if (index === -1) {
       throw new Error('Gagal memperbarui catatan. Id tidak ditemukan');
@@ -61,10 +63,10 @@ class NotesService {
   }
 
   deleteNoteById(id) {
-    const index = this._notes.findIndex((note) => note.id === id);
+    const index = this._notes.findIndex((n) => n.id === id);
 
     if (index === -1) {
-      throw new Error('Catatan gagal dihapus, id Tidak ditemukan');
+      throw new Error('Catatan gagal dihapus. Id tidak ditemukan');
     }
 
     this._notes.splice(index, 1);
