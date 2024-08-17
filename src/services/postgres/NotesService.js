@@ -29,11 +29,6 @@ class NotesService {
   }
 
   async getNotes() {
-    // const query = {
-    //   text: 'SELECT * FROM notes',
-    //   values: [],
-    // };
-
     const result = await this._pool.query('SELECT * FROM notes');
     return result.rows.map(mapDBToModel);
   }
@@ -49,7 +44,6 @@ class NotesService {
     if (!result.rows.length) {
       throw new NotFoundError('Catatan tidak ditemukan');
     }
-    console.log(result.rows.map(mapDBToModel)[0]);
 
     return result.rows.map(mapDBToModel)[0];
   }
